@@ -24,11 +24,11 @@ IMAGE_PREFIX=docker.flame.org/library/
 #
 
 # These are targets for "make local"
-BINARIES = chunked-client chunked-server
+BINARIES = chunked-client chunked-client-bufio chunked-server
 
 # These are the targets for Docker images.
 # Dockerfiles should have a target that ends in -image
-IMAGE_TARGETS = chunked-client chunked-server
+IMAGE_TARGETS = chunked-client chunked-client-bufio chunked-server
 
 #
 # Below here lies magic...

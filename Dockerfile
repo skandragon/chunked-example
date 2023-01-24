@@ -39,6 +39,7 @@ ENV GIT_BRANCH=${GIT_BRANCH} GIT_HASH=${GIT_HASH} BUILD_TYPE=${BUILD_TYPE}
 ENV CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH}
 RUN mkdir /out
 RUN go build -o /out/chunked-client app/chunked-client/*.go
+RUN go build -o /out/chunked-client-bufio app/chunked-client-bufio/*.go
 RUN go build -o /out/chunked-server app/chunked-server/*.go
 
 #
@@ -49,6 +50,15 @@ WORKDIR /app
 COPY --from=build-binaries /out/chunked-client /app
 EXPOSE 8090
 CMD ["/app/chunked-client"]
+
+#
+# Build the chunked-client-bufio image.  This should be a --target on docker build.
+#
+FROM scratch AS chunked-client-bufio-image
+WORKDIR /app
+COPY --from=build-binaries /out/chunked-client-bufio /app
+EXPOSE 8090
+CMD ["/app/chunked-client-bufio"]
 
 #
 # Build the chunked-server image.  This should be a --target on docker build.
