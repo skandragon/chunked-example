@@ -45,7 +45,7 @@ all: ${TARGETS}
 .PHONY: local
 local: $(addprefix bin/,$(BINARIES))
 
-bin/%:: ${all_deps}
+bin/%:: ${all_deps} go.mod go.sum
 	@[ -d bin ] || mkdir bin
 	go build -o $@ app/$(@F)/*.go
 
